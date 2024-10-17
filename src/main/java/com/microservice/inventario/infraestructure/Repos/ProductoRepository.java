@@ -15,19 +15,12 @@ public class ProductoRepository implements Repository<Producto> {
     private Connection getConnection() throws SQLException {
         return DatabaseConnection.getInstance();
     }
+    private CrudProducto productoCrud;
 
     @Override
     public List<Producto> findAll() throws SQLException {
-        List<Producto> productos = new ArrayList<>();
-        String sql = "SELECT * FROM productos";
-        try (Statement myStat = getConnection().createStatement()) {
-            ResultSet myResultSet = myStat.executeQuery(sql);
-            while (myResultSet.next()) {
-                Producto producto = createProducto(myResultSet);
-                productos.add(producto);
-            }
-        }
-        return productos;
+       
+       productoCrud.findAll()
     }
 
     @Override
