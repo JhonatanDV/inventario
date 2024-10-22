@@ -1,4 +1,4 @@
-package com.ejemplo.inventario.domain.dto;
+package com.microservice.inventario.domain.dtos;
 
 public class ProductStockDTO {
     private Long productId;

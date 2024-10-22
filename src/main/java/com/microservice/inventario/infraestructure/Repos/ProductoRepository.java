@@ -4,30 +4,56 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.inventario.config.DatabaseConnection;
 import com.inventario.model.Producto;
+import com.microservice.inventario.domain.Interfaz_repository.Product;
 
 public class ProductoRepository implements Repository<Producto> {
 
     private Connection getConnection() throws SQLException {
         return DatabaseConnection.getInstance();
     }
-    private CrudProducto productoCrud;
+
+    public List<Product> getProducts() throws SQLException {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT id_producto, nombre_producto, descripcion_producto FROM productos";
+        try (Connection conn = getConnection(); 
+             PreparedStatement myStat = conn.prepareStatement(sql);
+             ResultSet myResultSet = myStat.executeQuery()) {
+             
+            while (myResultSet.next()) {
+                Product product = new Product(myResultSet.getInt("id_producto"), myResultSet.getString("nombre_producto"), myResultSet.getString("descripcion_producto"));
+                products.add(product);
+            }
+        }
+        return products;
+    }
 
     @Override
     public List<Producto> findAll() throws SQLException {
-       
-       productoCrud.findAll()
+        List<Producto> productos = new ArrayList<>();
+        String sql = "SELECT * FROM productos";
+        try (Connection conn = getConnection(); 
+             PreparedStatement myStat = conn.prepareStatement(sql);
+             ResultSet myResultSet = myStat.executeQuery()) {
+             
+            while (myResultSet.next()) {
+                Producto producto = createProducto(myResultSet);
+                productos.add(producto);
+            }
+        }
+        return productos;
     }
 
     @Override
     public Producto getById(Integer id) throws SQLException {
         Producto producto = null;
         String sql = "SELECT * FROM productos WHERE id_producto = ?";
-        try (PreparedStatement myStat = getConnection().prepareStatement(sql)) {
+        try (Connection conn = getConnection(); 
+             PreparedStatement myStat = conn.prepareStatement(sql)) {
+             
             myStat.setInt(1, id);
             try (ResultSet myRes = myStat.executeQuery()) {
                 if (myRes.next()) {
@@ -40,20 +66,17 @@ public class ProductoRepository implements Repository<Producto> {
 
     @Override
     public void save(Producto producto) throws SQLException {
-        String sql;
-        if (producto.getIdProducto() != null && producto.getIdProducto() > 0) {
-            sql = "UPDATE productos SET nombre_producto = ?, descripcion = ?, precio = ?, cantidad_en_stock = ? WHERE id_producto = ?";
-        } else {
-            sql = "INSERT INTO productos (nombre_producto, descripcion, precio, cantidad_en_stock) VALUES (?, ?, ?, ?)";
-        }
-
-        try (PreparedStatement myStat = getConnection().prepareStatement(sql)) {
+        String sql = (producto.getIdProducto() != null && producto.getIdProducto() > 0) ?
+            "UPDATE productos SET nombre_producto = ?, descripcion_producto = ? WHERE id_producto = ?" :
+            "INSERT INTO productos (nombre_producto, descripcion_producto) VALUES (?, ?)";
+        
+        try (Connection conn = getConnection(); 
+             PreparedStatement myStat = conn.prepareStatement(sql)) {
+             
             myStat.setString(1, producto.getNombreProducto());
-            myStat.setString(2, producto.getDescripcion());
-            myStat.setDecimal(3, producto.getPrecio());
-            myStat.setInt(4, producto.getCantidadEnStock());
+            myStat.setString(2, producto.getDescripcionProducto());
             if (producto.getIdProducto() != null && producto.getIdProducto() > 0) {
-                myStat.setInt(5, producto.getIdProducto());
+                myStat.setInt(3, producto.getIdProducto());
             }
             myStat.executeUpdate();
         }
@@ -61,7 +84,10 @@ public class ProductoRepository implements Repository<Producto> {
 
     @Override
     public void delete(Integer id) throws SQLException {
-        try (PreparedStatement myStamt = getConnection().prepareStatement("DELETE FROM productos WHERE id_producto = ?")) {
+        String sql = "DELETE FROM productos WHERE id_producto = ?";
+        try (Connection conn = getConnection(); 
+             PreparedStatement myStamt = conn.prepareStatement(sql)) {
+             
             myStamt.setInt(1, id);
             myStamt.executeUpdate();
         }
@@ -71,9 +97,7 @@ public class ProductoRepository implements Repository<Producto> {
         Producto producto = new Producto();
         producto.setIdProducto(myResult.getInt("id_producto"));
         producto.setNombreProducto(myResult.getString("nombre_producto"));
-        producto.setDescripcion(myResult.getString("descripcion"));
-        producto.setPrecio(myResult.getBigDecimal("precio"));
-        producto.setCantidadEnStock(myResult.getInt("cantidad_en_stock"));
+        producto.setDescripcionProducto(myResult.getString("descripcion_producto"));
         return producto;
     }
 }
