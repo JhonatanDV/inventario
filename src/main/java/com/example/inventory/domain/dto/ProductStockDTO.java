@@ -1,13 +1,14 @@
 package com.example.inventory.domain.dto;
 
-public class ReorderRequest {
+
+public class ProductStockDTO {
     private Long productId;
-    private int quantity;
+    private int stock;
 
     // Constructor, getters y setters
-    public ReorderRequest(Long productId, int quantity) {
+    public ProductStockDTO(Long productId, int stock) {
         this.productId = productId;
-        this.quantity = quantity;
+        this.stock = stock;
     }
 
     public Long getProductId() {
@@ -18,11 +19,11 @@ public class ReorderRequest {
         this.productId = productId;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

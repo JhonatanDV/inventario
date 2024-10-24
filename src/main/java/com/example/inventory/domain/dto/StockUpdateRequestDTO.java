@@ -1,10 +1,10 @@
 package com.example.inventory.domain.dto;
 
-public class StockUpdateRequest {
+public class StockUpdateRequestDTO {
     private int stock;
 
     // Constructor, getters y setters
-    public StockUpdateRequest(int stock) {
+    public StockUpdateRequestDTO(int stock) {
         this.stock = stock;
     }
 

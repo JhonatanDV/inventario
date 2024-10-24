@@ -4,16 +4,16 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.InheritInverseConfiguration;
 
-import com.example.inventory.domain.dto.ReorderRequest;
-import com.example.inventory.infraestructure.entities.Product;
+import com.example.inventory.domain.dto.ReorderRequestDTO;
+import com.example.inventory.infraestructure.entities.ProductStock;
 
 @Mapper(componentModel = "spring")
 public interface ReorderRequestMapper {
 
     @Mapping(source = "productId", target = "productId")
     @Mapping(source = "stock", target = "quantity")  // Cambiar 'stock' por 'quantity'
-    ReorderRequest toReorderRequest(Product product);
+    ReorderRequestDTO toReorderRequest(ProductStock product);
 
     @InheritInverseConfiguration
-    Product toProduct(ReorderRequest reorderRequest);
+    ProductStock toProduct(ReorderRequestDTO reorderRequest);
 }

@@ -4,8 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.InheritInverseConfiguration;
 
-import com.example.inventory.domain.dto.ProductStock;
-import com.example.inventory.infraestructure.entities.Product;
+import com.example.inventory.domain.dto.ProductStockDTO;
 
 import java.util.List;
 
@@ -14,10 +13,10 @@ public interface ProductStockMapper {
 
     @Mapping(source = "productId", target = "productId")
     @Mapping(source = "stock", target = "stock")
-    ProductStock toProductStock(Product product);
+    ProductStockDTO toProductStock(ProductStockDTO product);
 
-    List<ProductStock> toProductStocks(List<Product> products);
+    List<ProductStockDTO> toProductStocks(List<ProductStockDTO> products);
 
     @InheritInverseConfiguration
-    Product toProduct(ProductStock productStock);
+    ProductStockDTO toProduct(ProductStockDTO productStock);
 }

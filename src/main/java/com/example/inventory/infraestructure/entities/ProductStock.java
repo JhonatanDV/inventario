@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Products")
-public class Product {
+public class ProductStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Product_ID")
@@ -20,6 +20,7 @@ public class Product {
     @Column(nullable = false)
     private Date lastUpdated;
 
+    // Getters y Setters
     public Long getProductId() {
         return productId;
     }
