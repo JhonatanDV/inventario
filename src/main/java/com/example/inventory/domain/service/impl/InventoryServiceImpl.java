@@ -1,6 +1,7 @@
 package com.example.inventory.domain.service.impl;
 
 import com.example.inventory.domain.dto.ProductStockDTO;
+import com.example.inventory.infraestructure.entities.ProductStock;
 import com.example.inventory.infraestructure.repositories.ProductRepository;
 import com.example.inventory.domain.service.InventoryService;
 import com.example.inventory.infraestructure.mapper.ProductStockMapper;
@@ -21,11 +22,10 @@ public class InventoryServiceImpl implements InventoryService {
     private ProductStockMapper productStockMapper;
 
     @Override
-    public List<ProductStockDTO> getAllProductStocks() {
-        // Usar el mapper para convertir las entidades en DTOs
-        List<com.example.inventory.infraestructure.entities.ProductStock> productEntityList = productRepository.getAllProducts();
-        return productStockMapper.ProductStock(productEntityList);  // Convertir entidades a DTOs
-    }
+public List<ProductStockDTO> getAllProductStocks() {
+    List<ProductStock> productEntityList = productRepository.getAllProducts();
+    return productStockMapper.toProductStockDTOs(productEntityList); // Convertir entidades a DTOs
+}
 
     @Override
     public void updateProductStock(Long productId, int stock) {

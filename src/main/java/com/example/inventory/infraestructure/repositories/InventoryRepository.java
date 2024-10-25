@@ -8,9 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.inventory.infraestructure.crud_interface.InventoryCrudRepository;
 import com.example.inventory.infraestructure.entities.ProductStock;
-import com.example.inventory.infraestructure.mapper.ProductStockMapper;
 import com.example.inventory.domain.repository.InventoryRepositoryInterface;
-
 
 @Repository
 public class InventoryRepository implements InventoryRepositoryInterface {
@@ -18,13 +16,9 @@ public class InventoryRepository implements InventoryRepositoryInterface {
     @Autowired
     private InventoryCrudRepository inventoryCrudRepository;
 
-    @Autowired
-    private ProductStockMapper productStockMapper;
-
     @Override
     public List<ProductStock> getAllInventories() {
-        List<ProductStock> products = (List<ProductStock>) inventoryCrudRepository.findAll();
-        return productStockMapper.toProductStocks(products);
+        return (List<ProductStock>) inventoryCrudRepository.findAll();
     }
 
     @Override
@@ -34,9 +28,7 @@ public class InventoryRepository implements InventoryRepositoryInterface {
 
     @Override
     public ProductStock createInventory(ProductStock productStock) {
-        ProductStock product = productStockMapper.toProduct(productStock);
-        product = inventoryCrudRepository.save(product);
-        return productStockMapper.toProductStock(product);
+        return inventoryCrudRepository.save(productStock);
     }
 
     @Override
@@ -46,7 +38,6 @@ public class InventoryRepository implements InventoryRepositoryInterface {
 
     @Override
     public List<ProductStock> findInventoriesByProductId(Long productId) {
-        List<ProductStock> products = inventoryCrudRepository.findByProductId(productId);
-        return productStockMapper.toProductStocks(products);
+        return inventoryCrudRepository.findByProductId(productId);
     }
 }
