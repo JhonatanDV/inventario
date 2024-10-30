@@ -17,8 +17,8 @@ public class ProductStock {
     @Column(nullable = false)
     private int stock;
 
-    @Column(nullable = false)
-    private Date lastUpdated;
+    @Column(nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+private Date lastUpdated;
 
     // Getters y Setters
     public Long getProductId() {

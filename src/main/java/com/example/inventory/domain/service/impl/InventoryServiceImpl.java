@@ -41,7 +41,8 @@ public List<ProductStockDTO> getAllProductStocks() {
     }
 
     @Override
-    public void reorderInventory(Long productId, int quantity) {
-        // Lógica para reordenar inventario
-    }
+public void reorderInventory(Long productId, int quantity) {
+
+}
+
 }
