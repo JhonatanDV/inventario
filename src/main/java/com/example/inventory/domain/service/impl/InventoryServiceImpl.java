@@ -41,7 +41,25 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public void reorderInventory(Long productId, int quantity) {
+    public String reorderInventory(Long productId, int quantity) {
+        // Buscar el producto por su ID
+        Optional<ProductStock> optionalProduct = productRepository.findById(productId);
 
+        if (optionalProduct.isPresent()) {
+            ProductStock product = optionalProduct.get();
+
+            // Actualizar el stock añadiendo la cantidad de la reposición
+            int newStock = product.getStock() + quantity;
+            product.setStock(newStock);
+
+            // Guardar el producto actualizado
+            productRepository.save(product);
+
+            // Retornar el nombre del producto y el stock actualizado en la respuesta
+            return String.format("{\"message\": \"Reposición solicitada para el producto '%s'. Stock actualizado a %d\"}",
+                    product.getProductName(), newStock);
+        } else {
+            throw new RuntimeException("Product not found");
+        }
     }
 }

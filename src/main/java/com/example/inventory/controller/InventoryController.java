@@ -33,14 +33,10 @@ public class InventoryController {
         return ResponseEntity.ok("{\"message\": \"Stock actualizado\"}");
     }
 
-        @GetMapping("/test")
-    public ResponseEntity<String> testEndpoint() {
-        return ResponseEntity.ok("Endpoint funcionando");
-    }
     // POST /inventory/reorder
     @PostMapping("/reorder")
     public ResponseEntity<String> reorderInventory(@RequestBody ReorderRequestDTO request) {
-        inventoryService.reorderInventory(request.getProductId(), request.getQuantity());
-        return ResponseEntity.ok("{\"message\": \"Reposición solicitada\"}");
+        String responseMessage = inventoryService.reorderInventory(request.getProductId(), request.getQuantity());
+        return ResponseEntity.ok(responseMessage);
     }
 }
