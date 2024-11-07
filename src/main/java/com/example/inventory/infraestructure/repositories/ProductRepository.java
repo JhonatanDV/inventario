@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.example.inventory.infraestructure.crud_interface.InventoryCrudRepository;
 import com.example.inventory.infraestructure.entities.ProductStock;
-import com.example.inventory.infraestructure.mapper.ProductStockMapper;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,10 +12,6 @@ public class ProductRepository {
 
     @Autowired
     private InventoryCrudRepository productCrudRepository;
-
-    @Autowired
-    @SuppressWarnings("unused")
-    private ProductStockMapper productMapper;
 
     public List<ProductStock> getAllProducts() {
         return (List<ProductStock>) productCrudRepository.findAll();

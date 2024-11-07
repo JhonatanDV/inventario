@@ -1,17 +1,21 @@
 package com.example.inventory.infraestructure.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import com.example.inventory.domain.dto.ProductStockDTO;
 import com.example.inventory.infraestructure.entities.ProductStock;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ProductStockMapper {
 
-    @Mapping(source = "productId", target = "productId")
-    @Mapping(source = "stock", target = "stock")
-    ProductStockDTO toProductStockDTO(ProductStock product);
+    @Mapping(source = "lastUpdated", target = "lastUpdated")  
+    ProductStockDTO toProductStockDTO(ProductStock productStock);
 
-    List<ProductStockDTO> toProductStockDTOs(List<ProductStock> products);
+    List<ProductStockDTO> toProductStockDTOs(List<ProductStock> productStockList);
+
+    ProductStock toEntity(ProductStockDTO productStockDTO);
 }
+

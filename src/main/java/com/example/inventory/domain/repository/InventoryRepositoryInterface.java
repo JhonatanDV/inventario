@@ -3,12 +3,12 @@ package com.example.inventory.domain.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.inventory.infraestructure.entities.ProductStock;
+import com.example.inventory.domain.dto.ProductStockDTO;
 
 public interface InventoryRepositoryInterface {
-    List<ProductStock> getAllInventories();
-    Optional<ProductStock> findById(Long id);
-    ProductStock createInventory(ProductStock productStock);
+    List<ProductStockDTO> getAllInventories();
+    Optional<ProductStockDTO> findById(Long id);
+    ProductStockDTO createInventory(ProductStockDTO productStock);
     void deleteInventory(Long id);
-    List<ProductStock> findInventoriesByProductId(Long productId);
+    List<ProductStockDTO> findInventoriesByProductId(Long productId);
 }

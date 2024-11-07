@@ -22,17 +22,17 @@ public class InventoryServiceImpl implements InventoryService {
     private ProductStockMapper productStockMapper;
 
     @Override
-public List<ProductStockDTO> getAllProductStocks() {
-    List<ProductStock> productEntityList = productRepository.getAllProducts();
-    return productStockMapper.toProductStockDTOs(productEntityList); // Convertir entidades a DTOs
-}
+    public List<ProductStockDTO> getAllProductStocks() {
+        List<ProductStock> productEntityList = productRepository.getAllProducts();  
+        return productStockMapper.toProductStockDTOs(productEntityList); 
+    }
 
     @Override
     public void updateProductStock(Long productId, int stock) {
-        Optional<com.example.inventory.infraestructure.entities.ProductStock> optionalProduct = productRepository.findById(productId);
+        Optional<ProductStock> optionalProduct = productRepository.findById(productId);
 
         if (optionalProduct.isPresent()) {
-            com.example.inventory.infraestructure.entities.ProductStock product = optionalProduct.get();
+            ProductStock product = optionalProduct.get();
             product.setStock(stock); // Actualizar el stock
             productRepository.save(product); // Guardar el producto actualizado
         } else {
@@ -41,8 +41,7 @@ public List<ProductStockDTO> getAllProductStocks() {
     }
 
     @Override
-public void reorderInventory(Long productId, int quantity) {
+    public void reorderInventory(Long productId, int quantity) {
 
-}
-
+    }
 }

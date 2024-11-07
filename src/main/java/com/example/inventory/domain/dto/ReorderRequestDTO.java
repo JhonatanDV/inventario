@@ -2,14 +2,14 @@ package com.example.inventory.domain.dto;
 
 public class ReorderRequestDTO {
     private Long productId;
-    private int quantity;
+    private int quantity;  
 
-    // Constructor, getters y setters
     public ReorderRequestDTO(Long productId, int quantity) {
         this.productId = productId;
         this.quantity = quantity;
     }
 
+    // Getters y setters
     public Long getProductId() {
         return productId;
     }
